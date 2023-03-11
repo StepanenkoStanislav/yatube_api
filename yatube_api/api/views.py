@@ -6,7 +6,6 @@ from rest_framework import (
     filters
 )
 from django.shortcuts import get_object_or_404
-from django.contrib.auth.models import User
 
 from posts.models import Post, Group
 from api.serializers import (
@@ -60,8 +59,7 @@ class FollowViewSet(viewsets.GenericViewSet,
         return self.request.user.followings.select_related()
 
     def perform_create(self, serializer):
-        following_user = get_object_or_404(
-            User,
-            username=serializer.validated_data.get('following')
+        serializer.save(
+            user=self.request.user,
+            following=serializer.validated_data.get('following')
         )
-        serializer.save(user=self.request.user, following=following_user)
