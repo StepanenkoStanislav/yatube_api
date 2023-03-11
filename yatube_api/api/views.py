@@ -60,6 +60,5 @@ class FollowViewSet(viewsets.GenericViewSet,
 
     def perform_create(self, serializer):
         serializer.save(
-            user=self.request.user,
-            following=serializer.validated_data.get('following')
+            user=self.request.user
         )
