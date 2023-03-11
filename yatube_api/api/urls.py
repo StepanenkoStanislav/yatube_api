@@ -16,13 +16,13 @@ v1_router.register(
 v1_router.register('groups', GroupViewSet)
 v1_router.register('follow', FollowViewSet, basename='follow')
 
+jwt_patterns = [
+    path('create/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    path('verify/', TokenVerifyView.as_view(), name='token_verify')
+]
+
 urlpatterns = [
     path('v1/', include(v1_router.urls)),
-    path(
-        'v1/jwt/create/',
-        TokenObtainPairView.as_view(),
-        name='token_obtain_pair'
-    ),
-    path('v1/jwt/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
-    path('v1/jwt/verify/', TokenVerifyView.as_view(), name='token_verify')
+    path('v1/jwt/', include(jwt_patterns)),
 ]

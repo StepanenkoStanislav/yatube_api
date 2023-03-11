@@ -3,13 +3,12 @@ from rest_framework import (
     pagination,
     permissions,
     mixins,
-    exceptions,
     filters
 )
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.models import User
 
-from posts.models import Post, Group, Follow
+from posts.models import Post, Group
 from api.serializers import (
     PostSerializer,
     CommentSerializer,
@@ -61,24 +60,8 @@ class FollowViewSet(viewsets.GenericViewSet,
         return self.request.user.followings.select_related()
 
     def perform_create(self, serializer):
-        following = serializer.validated_data.get('following')
-        if following == self.request.user.username:
-            raise exceptions.ValidationError({
-                "detail": "Вы не можете подписаться на самого себя."
-            })
-        following_user = User.objects.filter(username=following)
-        if not following_user:
-            raise exceptions.ValidationError({
-                "following": [
-                    "Обязательное поле."
-                ]
-            })
-        if Follow.objects.filter(
-                user=self.request.user.id,
-                following=following_user.first().id
-        ).exists():
-            raise exceptions.ValidationError({
-                "detail": "На этого автора вы уже подписаны."
-            })
-        serializer.save(
-            user=self.request.user, following=following_user.first())
+        following_user = get_object_or_404(
+            User,
+            username=serializer.validated_data.get('following')
+        )
+        serializer.save(user=self.request.user, following=following_user)
