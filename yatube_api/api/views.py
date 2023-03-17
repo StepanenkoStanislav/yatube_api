@@ -7,7 +7,7 @@ from rest_framework import (
 )
 from django.shortcuts import get_object_or_404
 
-from posts.models import Post, Group
+from posts.models import Post, Group, Comment, Follow
 from api.serializers import (
     PostSerializer,
     CommentSerializer,
@@ -35,7 +35,7 @@ class CommentViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         post = get_object_or_404(Post, id=self.kwargs.get('post_id'))
-        return post.comments.select_related()
+        return Comment.objects.filter(post=post)
 
     def perform_create(self, serializer):
         post = get_object_or_404(Post, id=self.kwargs.get('post_id'))
@@ -56,7 +56,7 @@ class FollowViewSet(viewsets.GenericViewSet,
     filter_backends = (filters.SearchFilter,)
 
     def get_queryset(self):
-        return self.request.user.followings.select_related()
+        return Follow.objects.filter(user=self.request.user)
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
