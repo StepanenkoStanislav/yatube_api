@@ -1,6 +1,6 @@
-# ApiYatube - api for yatube
+# Yatube API - API for YaTube
 ## Описание
-Проект api_yatube позволяет приложениям взаимодействовать с yatube.<br>
+Сервис Yatube API позволяет приложениям взаимодействовать с yatube.<br>
 Для авторизации пользователей используется аутентификация по токену.
 Неаутентифицированные пользователи могут только просматривать группы, посты, 
 а также комментарии к ним. Аутентифицированные пользователи могут также 
@@ -14,11 +14,11 @@
 Клонировать репозиторий и перейти в него в командной строке:
 
 ```
-git clone https://github.com/diso-rgb/api_final_yatube.git
+git clone
 ```
 
 ```
-cd api_final_yatube
+cd yatube_api
 ```
 
 Cоздать и активировать виртуальное окружение:
@@ -102,3 +102,19 @@ python manage.py runserver
   "group": 0
 }
 ```
+
+## Технологии
+
+<div>
+  <img src="https://github.com/devicons/devicon/blob/master/icons/python/python-original.svg" title="python" alt="python" width="40" height="40"/>&nbsp
+  <img src="https://github.com/devicons/devicon/blob/master/icons/django/django-plain.svg" title="django" alt="django" width="40" height="40"/>&nbsp
+</div>
+
+В проекте используются следующие технологии:
+- Python 3.7
+- Django 3.2
+- DjangoRestFramework 3.12.4
+
+## Автор
+
+[![Telegram Badge](https://img.shields.io/badge/StepanenkoStanislav-blue?logo=telegram&logoColor=white)](https://t.me/tme_zoom) [![Gmail Badge](https://img.shields.io/badge/-Gmail-red?style=flat&logo=Gmail&logoColor=white)](mailto:stepanenko.s.a.dev@gmail.com)
